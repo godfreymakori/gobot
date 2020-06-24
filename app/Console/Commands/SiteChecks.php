@@ -52,12 +52,12 @@ class SiteChecks extends Command
 
                 $site_data = explode(';', $site_info);
                 $url = current($site_data);
-                $expected_title = end($site_data);
+                $expected_title = strtolower(end($site_data));
 
                 $dom = new Dom;
                 $dom->loadFromUrl($url);
-                $title = $dom->find('a')[0];
-                $title_text = $title->text;
+                $title = $dom->find('title')[0];
+                $title_text = strtolower($title->text);
 
                 if (!Str::contains($title_text, $expected_title)) {
                     $issue_sites[] = $url;
