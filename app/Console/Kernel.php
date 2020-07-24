@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('sites:check')->everyFifteenMinutes();
-       // $schedule->command('count:commits')->cron('0 */4 * * *'); //every 4hours
+        $schedule->command('count:commits')->cron('0 */4 * * *'); //every 4hours
     }
 
     /**
