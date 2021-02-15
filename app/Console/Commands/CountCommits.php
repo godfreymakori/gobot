@@ -52,11 +52,12 @@ class CountCommits extends Command
 
         $dom = new Dom;
         $dom->loadFromUrl($github_profile);
-        $day_counts = $dom->getElementsByTag('.day');
-        $last_day_index = count($day_counts) - 1;
-        $commit_count = $dom->find('rect[data-count]', $last_day_index)->{'data-count'};
+        $day_counts = $dom->getElementsByTag('.ContributionCalendar-day');
+        $last_day_index = count($day_counts);
 
-        $message = $commit_count . ' ' . Str::plural('commit', $commit_count) . ' for ' . Carbon::now()->format('M j').' as at '.Carbon::now()->format('g:i A');
+        $commit_count = $dom->find('rect[data-date]', 365)->{'data-count'};
+
+        $message = $commit_count . ' ' . Str::plural('commit', $commit_count) . ' for ' . Carbon::now()->format('M j') . ' as at ' . Carbon::now()->format('g:i A');
 
         Notification::route('slack', config('gobot.notification.slack_hook'))
             ->notify(new CommitCount($message));
