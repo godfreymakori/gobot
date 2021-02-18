@@ -55,7 +55,9 @@ class CountCommits extends Command
         $day_counts = $dom->getElementsByTag('.ContributionCalendar-day');
         $last_day_index = count($day_counts);
 
-        $commit_count = $dom->find('rect[data-date]', 365)->{'data-count'};
+        $target_index = $last_day_index - 6;
+
+        $commit_count = $dom->find('rect[data-date]', $target_index)->{'data-count'};
 
         $message = $commit_count . ' ' . Str::plural('commit', $commit_count) . ' for ' . Carbon::now()->format('M j') . ' as at ' . Carbon::now()->format('g:i A');
 
